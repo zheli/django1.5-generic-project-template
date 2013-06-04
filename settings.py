@@ -6,8 +6,6 @@ import os, sys
 
 PROJECT_PATH        = os.path.dirname(os.path.abspath(__file__))
 CURRENT_DIR         = os.path.dirname(__file__)
-TEMPLATE_DIRS       = (os.path.join(CURRENT_DIR, 'templates'),)
-STATICFILES_DIRS    = (os.path.join(CURRENT_DIR, 'static'),)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -81,6 +79,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(CURRENT_DIR, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -92,7 +91,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'PLEASE_ADD_ME'
+SECRET_KEY = '{{secret_key}}'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -120,6 +119,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(CURRENT_DIR, 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -164,7 +164,9 @@ LOGGING = {
     }
 }
 
+DEBUG_APPS = None
 try:
     from local_settings import *
+    INSTALLED_APPS = INSTALLED_APPS[:] + DEBUG_APPS
 except ImportError:
     pass
